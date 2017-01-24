@@ -8,15 +8,13 @@
 
 #import "ViewController.h"
 
-#import "AccountPresenter.h"
-#import "PasswordPresenter.h"
-#import "InputCheckPresenter.h"
+#import "LoginViewProtocol.h"
 #import "LoginPresenter.h"
 
-@interface ViewController ()
+@interface ViewController () <LoginViewProtocol>
 
-@property (strong, nonatomic) AccountPresenter *accountPresenter;
-@property (strong, nonatomic) PasswordPresenter *passwordPresenter;
+@property (strong, nonatomic) UITextField *accountTextField;
+@property (strong, nonatomic) UITextField *passwordTextField;
 @property (strong, nonatomic) LoginPresenter *loginPresenter;
 
 @end
@@ -27,6 +25,7 @@
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 	self.view.backgroundColor = [UIColor whiteColor];
+	_loginPresenter = [[LoginPresenter alloc] initWithView: self];
 	[self initAccountTextField];
 	[self initPasswordTextField];
 	[self initCheckButton];
@@ -40,21 +39,19 @@
 
 - (void)initAccountTextField
 {
-	UITextField *accountTextField = [[UITextField alloc] initWithFrame: CGRectMake(50.0, 64.0, 150.0, 30.0)];
-	accountTextField.borderStyle = UITextBorderStyleRoundedRect;
-	accountTextField.placeholder = @"0-9A-Za-z";
-	[self.view addSubview: accountTextField];
-	_accountPresenter = [[AccountPresenter alloc] initWithTextField: accountTextField];
+	_accountTextField = [[UITextField alloc] initWithFrame: CGRectMake(50.0, 64.0, 150.0, 30.0)];
+	_accountTextField.borderStyle = UITextBorderStyleRoundedRect;
+	_accountTextField.placeholder = @"0-9A-Za-z";
+	[self.view addSubview: _accountTextField];
 }
 
 - (void)initPasswordTextField
 {
-	UITextField *passwordTextField = [[UITextField alloc] initWithFrame: CGRectMake(50.0, 112.0, 150.0, 30.0)];
-	passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
-	passwordTextField.placeholder = @"more than 6";
-	passwordTextField.secureTextEntry = YES;
-	[self.view addSubview: passwordTextField];
-	_passwordPresenter = [[PasswordPresenter alloc] initWithTextField: passwordTextField];
+	_passwordTextField = [[UITextField alloc] initWithFrame: CGRectMake(50.0, 112.0, 150.0, 30.0)];
+	_passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
+	_passwordTextField.placeholder = @"more than 6";
+	_passwordTextField.secureTextEntry = YES;
+	[self.view addSubview: _passwordTextField];
 }
 
 - (void)initCheckButton
@@ -69,19 +66,15 @@
 
 - (void)onCheckButtonPressed
 {
-	InputCheckPresenter *checkPresenter = [[InputCheckPresenter alloc] initWithAccount: _accountPresenter password: _passwordPresenter];
-	self.loginPresenter = [[LoginPresenter alloc] initWithAccount: _accountPresenter.textField.text password: _passwordPresenter.textField.text checkPresenter: checkPresenter];
-	[_loginPresenter loginWithCompletion: ^(NSError *error) {
-		NSString *message = @"Login Success!";
-		if(error)
-		{
-			message = error.userInfo[@"result"];
-		}
-		UIAlertController *alert = [UIAlertController alertControllerWithTitle: @"Warning" message: message preferredStyle: UIAlertControllerStyleAlert];
-		UIAlertAction *action = [UIAlertAction actionWithTitle: @"Confirm" style: UIAlertActionStyleDefault handler: nil];
-		[alert addAction: action];
-		[self presentViewController: alert animated: YES completion: nil];
-	}];
+	[_loginPresenter loginWithAccount: _accountTextField.text password: _passwordTextField.text];
+}
+
+- (void)showResult:(NSString *)message
+{
+	UIAlertController *alert = [UIAlertController alertControllerWithTitle: @"Warning" message: message preferredStyle: UIAlertControllerStyleAlert];
+	UIAlertAction *action = [UIAlertAction actionWithTitle: @"Confirm" style: UIAlertActionStyleDefault handler: nil];
+	[alert addAction: action];
+	[self presentViewController: alert animated: YES completion: nil];
 }
 
 @end

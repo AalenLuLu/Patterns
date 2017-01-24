@@ -8,11 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "CheckPresenter.h"
+#import "LoginPresenterProtocol.h"
 
-@interface LoginPresenter : NSObject
-
-- (instancetype)initWithAccount: (NSString *)account password: (NSString *)password checkPresenter: (id<CheckPresenter>)checkPresenter;
-- (void)loginWithCompletion: (void (^)(NSError *error))completion;
+@interface LoginPresenter : NSObject <LoginPresenterProtocol>
 
 @end

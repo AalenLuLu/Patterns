@@ -14,9 +14,6 @@
 		FE0B80E21E349F5D0008EFBF /* MVPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0B80E11E349F5C0008EFBF /* MVPTests.m */; };
 		FE0B80ED1E349F5D0008EFBF /* MVPUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0B80EC1E349F5D0008EFBF /* MVPUITests.m */; };
 		FE9377721E35D8E600B980D6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9377711E35D8E600B980D6 /* ViewController.m */; };
-		FE9377791E35DEC400B980D6 /* AccountPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9377781E35DEC400B980D6 /* AccountPresenter.m */; };
-		FE93777C1E35DED000B980D6 /* PasswordPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE93777B1E35DED000B980D6 /* PasswordPresenter.m */; };
-		FE9377841E35FDE300B980D6 /* InputCheckPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9377831E35FDE300B980D6 /* InputCheckPresenter.m */; };
 		FE9377871E3604F000B980D6 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9377861E3604F000B980D6 /* UserModel.m */; };
 		FE93778A1E36055700B980D6 /* LoginPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9377891E36055700B980D6 /* LoginPresenter.m */; };
 /* End PBXBuildFile section */
@@ -54,18 +51,12 @@
 		FE0B80EE1E349F5D0008EFBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE9377701E35D8E600B980D6 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		FE9377711E35D8E600B980D6 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		FE9377771E35DEC400B980D6 /* AccountPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountPresenter.h; sourceTree = "<group>"; };
-		FE9377781E35DEC400B980D6 /* AccountPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountPresenter.m; sourceTree = "<group>"; };
-		FE93777A1E35DED000B980D6 /* PasswordPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordPresenter.h; sourceTree = "<group>"; };
-		FE93777B1E35DED000B980D6 /* PasswordPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordPresenter.m; sourceTree = "<group>"; };
-		FE93777D1E35F7D200B980D6 /* TextFieldPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldPresenter.h; sourceTree = "<group>"; };
-		FE93777E1E35FCC000B980D6 /* CheckPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckPresenter.h; sourceTree = "<group>"; };
-		FE9377821E35FDE300B980D6 /* InputCheckPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputCheckPresenter.h; sourceTree = "<group>"; };
-		FE9377831E35FDE300B980D6 /* InputCheckPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputCheckPresenter.m; sourceTree = "<group>"; };
 		FE9377851E3604F000B980D6 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
 		FE9377861E3604F000B980D6 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
 		FE9377881E36055700B980D6 /* LoginPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginPresenter.h; sourceTree = "<group>"; };
 		FE9377891E36055700B980D6 /* LoginPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginPresenter.m; sourceTree = "<group>"; };
+		FED6B1281E36F4BE00978E5B /* LoginPresenterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginPresenterProtocol.h; sourceTree = "<group>"; };
+		FED6B1291E36F4C500978E5B /* LoginViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,14 +166,7 @@
 		FE93776E1E35D8E600B980D6 /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
-				FE93777D1E35F7D200B980D6 /* TextFieldPresenter.h */,
-				FE9377771E35DEC400B980D6 /* AccountPresenter.h */,
-				FE9377781E35DEC400B980D6 /* AccountPresenter.m */,
-				FE93777A1E35DED000B980D6 /* PasswordPresenter.h */,
-				FE93777B1E35DED000B980D6 /* PasswordPresenter.m */,
-				FE93777E1E35FCC000B980D6 /* CheckPresenter.h */,
-				FE9377821E35FDE300B980D6 /* InputCheckPresenter.h */,
-				FE9377831E35FDE300B980D6 /* InputCheckPresenter.m */,
+				FED6B1281E36F4BE00978E5B /* LoginPresenterProtocol.h */,
 				FE9377881E36055700B980D6 /* LoginPresenter.h */,
 				FE9377891E36055700B980D6 /* LoginPresenter.m */,
 			);
@@ -192,6 +176,7 @@
 		FE93776F1E35D8E600B980D6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FED6B1291E36F4C500978E5B /* LoginViewProtocol.h */,
 				FE9377701E35D8E600B980D6 /* ViewController.h */,
 				FE9377711E35D8E600B980D6 /* ViewController.m */,
 			);
@@ -333,11 +318,8 @@
 				FE9377721E35D8E600B980D6 /* ViewController.m in Sources */,
 				FE0B80CC1E349F5C0008EFBF /* AppDelegate.m in Sources */,
 				FE9377871E3604F000B980D6 /* UserModel.m in Sources */,
-				FE9377791E35DEC400B980D6 /* AccountPresenter.m in Sources */,
 				FE93778A1E36055700B980D6 /* LoginPresenter.m in Sources */,
 				FE0B80C91E349F5C0008EFBF /* main.m in Sources */,
-				FE9377841E35FDE300B980D6 /* InputCheckPresenter.m in Sources */,
-				FE93777C1E35DED000B980D6 /* PasswordPresenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
