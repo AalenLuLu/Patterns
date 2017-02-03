@@ -10,8 +10,8 @@
 
 #import "UserModel.h"
 
-NSString * const kLoginStateChangedNotification = @"com.aalen.demo.patterns.mvvm.login.statechange.notification";
-NSString * const kLoginErrorNotification = @"com.aalen.demo.patterns.mvvm.login.error.notification";
+NSString * const kLoginStateChangedNotification = @"com.aalen.demo.mvvm.login.statechange.notification";
+NSString * const kLoginErrorNotification = @"com.aalen.demo.mvvm.login.error.notification";
 
 @interface ViewModel ()
 

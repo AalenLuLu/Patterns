@@ -31,7 +31,7 @@
 {
 	if(0 == random() % 3)
 	{
-		*error = [NSError errorWithDomain: @"com.aalen.demo.mvp.usermodel.domain" code: -1 userInfo: @{@"result": @"Random Failed!"}];
+		*error = [NSError errorWithDomain: @"com.aalen.demo.mvvm.usermodel.domain" code: -1 userInfo: @{@"result": @"Random Failed!"}];
 	}
 }
 
