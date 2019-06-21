@@ -9,6 +9,8 @@
 
 ## Traditional MVC
 
+[MSDN MVC](https://docs.microsoft.com/en-us/previous-versions/msp-n-p/ff649643(v=pandp.10))
+
 ![传统MVC](https://img-blog.csdn.net/20151216120808604)
 
 传统 MVC 中, View 是无状态的, 一旦 Model 改变就会被 Controller 简单渲染 (It is simply rendered by Controller once the Model is changed)
@@ -37,6 +39,8 @@ Cocoa MVC 鼓励写出 Massive ViewController, 因为 ViewController 参与到 V
 
 ## MVP
 
+[MSDN MVP](https://docs.microsoft.com/en-us/previous-versions/msp-n-p/ff649571(v=pandp.10))
+
 ![MVP](https://img-blog.csdn.net/20151216141519450)
 
 **与 Apple's MVC 区别为 Presenter 只是 Mediator, 没有和 View 的生命周期紧密耦合**
@@ -50,7 +54,7 @@ Cocoa MVC 鼓励写出 Massive ViewController, 因为 ViewController 参与到 V
 
 ## MVVM
 
-[Microsoft MVVM](https://docs.microsoft.com/en-us/previous-versions/msp-n-p/hh848246(v=pandp.10)#MVVMPattern)
+[MSDN MVVM](https://docs.microsoft.com/en-us/previous-versions/msp-n-p/hh848246(v=pandp.10)#MVVMPattern)
 
 ![MVVM](https://img-blog.csdn.net/20151216142000760)
 
