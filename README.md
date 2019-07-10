@@ -120,13 +120,57 @@ Cocoa MVC 鼓励写出 Massive ViewController, 因为 ViewController 参与到 V
 
 + Interactor -- Represents a single use case in the app. It contains the business logic to manipulate (操纵) model objects (Entities) to carry out a specific task.
 
+```
+- (void)findUpcomingItems
+{
+    __weak typeof(self) wself = self;
+    NSDate *today = [self.clock today];
+    NSDate *endOfNextWeek = [[NSCalendar currentCalendar] dateForEndOfFollowingWeekWithDate: today];
+    [self.dataManager todoItemsBetweenStartDate: today endData: endOfNextWeek completionBlock: ^(NSArray *todoItems){
+        [wself.output foundUpcomingItems: [wself upcomingItemsFromToDoItems: todoItems]];
+    }];
+}
+```
+
 + Entity (Model) -- Model objects manipulated by an Interactor. Entities are only manipulated by the Interactor. The Interactor never passes Entities to the presentation layer.
+
+```
+@interface VTDTodoItem : NSObject
+
+@property (strong, nontomic) NSDate *dueDate;
+@property (copy, nonatomic) NSString *name;
+
++ (instancetype)todoItemWithDueDate: (NSDate *)dueDate name: (NSString *)name;
+
+@end
+```
 
 + Data Store -- (e.g. web service, database) is responsible for providing **Entities** to an **Interactor**. As an **Interactor** applies its business logic it will typically retrieve **Entities** from the *Data Store*, manipulate the **Entities** and then put the updated **Entities** back in the *Data Store*. The *Data Store* manages the persistence of the **Entities**. **Entities** do not know about the *Data Store*, so **Entities** do not know how to persist themselves.
 
 + Presenter -- (Plain Old NSObject) which mainly consists of logic to drive the UI. It gathers input from user interactions so it can send requests to an **Interactor**. The Presenter also receives results from an **Interactor** and converts the results into a *form* that is efficient to display in a **View**.
 
   **Entities** are never passed from the **Interactor** to the **Presenter**. Instead, *simple data structures* that have no behavior are passed from the **Interactor** to the **Presenter**. This prevents any "real work" from being done in the **Presenter**. The **Presenter** can only prepare the data for display in the **View**.
+
+  ```
+  - (void)addNewEntry
+  {
+      [self.listWireframe presentAddInterface];
+  }
+  ```
+
+  ```
+  - (void)foundUpcomingItems: (NSArray *)upcomingItems
+  {
+      if(0 == upcomingItems.count)
+      {
+          [self.userInterface showNoContentMessage];
+      }
+      else
+      {
+          [self updateUserInterfaceWithUpcomingItems: upcomingItems];
+      }
+  }
+  ```
 
 + View -- (Passive), waits for the **Presenter** to give it content to display; it never asks the **Presenter** for data. Method defined for a View should allow a **Presenter** to communicate at a higher level of abstraction, expressed in terms of its content and not how that content is to be displayed. The **Presenter** does not know about the existence of UILabel, UIButton, etc. The **Presenter** only knows about the content it maintains and when it should be displayed. It is up to the **View** to determine how the content is displayed.
 
@@ -140,3 +184,66 @@ Cocoa MVC 鼓励写出 Massive ViewController, 因为 ViewController 参与到 V
   ...
   @end
   ```
+
+  **Views** and **ViewControllers** also handle user interaction and input. The **ViewControllers** shouldn't be making decisions based on these actions, but it should pass these events along to something that can.
+
+  The boundary between **View** and the **Presenter** is also a great place for ***RAC***.
+
++ Wireframe (Routing) -- Routing handles navigation from one screen to another as defined in the **wireframes** created by an interaction designer. A **Wireframe** object in responsible for routing. The **Wireframe** object owns the *UIWindow*, *UINavigationController*, etc. It is responsible for creating an **Interactor**, **Presenter** and **View/ViewController** and installing the **ViewController** in the window. 
+
+  Since the **Presenter** contains the logic to react to user inputs, it is the **Presenter** that knows when to navigate to another screen, and which screen to naivgate to. The **Wireframe** knows how to navigate. So, the **Presenter** will use the **Wireframe** to perform the navigation. The **Presenter** is a client of the **Wireframe**.
+
+  In VIPER, the responsibility for **Routing** is shared between two objects: **Presenter** and **Wireframe**.
+
+  The **Wireframe** is also an obvious place to handle navigation transition animations.
+
+  ```
+  @implementation VTDAddWireframe
+
+  - (void)presentAddInterfaceFromViewController: (UIViewController *)viewController
+  {
+      VTDAddViewController *addViewController = [self addViewController];
+      addViewController.eventHandler = self.addPresenter;
+      addViewController.modalPresentationStyle = UIModalPresentationCustom;
+      addViewController.transitioningDelegate = self;
+
+      [viewController presentViewController: addViewController animated: YES completion: nil];
+      self.presentedViewController = viewController;
+  }
+
+  #pragma mark - UIViewControllerTransitioningDelegate
+
+  - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController: (UIViewController *)dismissed
+  {
+      return [[VTDAddDismissalTransition alloc] init];
+  }
+
+  - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController: (UIViewController *)presented presentingController: (UIViewController *)presenting sourceController: (UIViewController *)source
+  {
+      return [[VTDAddPresentationTransition alloc] init];
+  }
+
+  @end
+  ```
+
+## Network
+
+Where should this networking take place and what should be responsible for initiating it?
+
+It's typically up to the **Interactor** to initiate a network operation, but it won't handle the networking code directly.
+
+The **Interactor** may have to aggregate data from multiple sources to provide the information needed to fulfill a use case. Then it's up to the **Presenter** to take the data returned by the **Interactor** and format it for presentation.
+
+The **Interactor** should not know how to persist the entities either.
+
+Sometimes the **Interactor** may want to use a type of object called a data manager to facilitate (促进) its interaction with the **Data Store**.
+
+**Data Manager** handles more of the store-specific types of operations, like creating fetch requests, building queries, etc. This allows the **Interactor** to focus more on application logic and not have to know anything about how entities are gathered or persisted.
+
+## Structs
+
+In VIPER we use small, lightweight, model classes to pass data between layers, such as from the **Presenter** to the **View**.
+
+----
+
+根据 Demo, 发现 **Interactor** don't know about **Entity**, 而是由 **Interactor** 持有的 **Store** 去操作 **Entity**, 直接转换 **Structure** 到 **Interactor**, 再上传到 **Presenter**
